@@ -43,10 +43,13 @@ export default {
   components: {VueMasonryWall},
   data() {
     return {
+      //每一个时刻此参数唯一，用于强制刷新组件
       key: '',
       categories: [],
       items: [],
+      //壁纸url来源于360官方免费提供，如有侵权，立即删除
       url: "http://wallpaper.apc.360.cn/index.php?c=WallPaper&a=getAppsByCategory&from=360chrome",
+      //vue-masonry-wall组件的设置参数
       option: {
         width: 300,
         padding: {
@@ -54,7 +57,6 @@ export default {
           default: 20
         },
       },
-      isShowItem:false
     }
   },
    mounted() {  
@@ -63,17 +65,23 @@ export default {
     })
   },  
   methods: {
+    //ipc通知主进程调用修改壁纸函数
     Apply(url){
       ipcRenderer.invoke("setWallPaperViaUrl",url);
     },
     append() {
+      //组件vue-masonry-wall的方法，该组件会自动调用此方法形成瀑布流
+      //由cid参数决定壁纸的分类
       let u = this.url + "&cid=" + this.$route.query.cid ;
+      //cid=0的情况，就说明第一次进入界面或者通过最新壁纸按钮进入，这个情况下加载最新的壁纸
       if(this.$route.query.cid==0)
         u = "http://wallpaper.apc.360.cn/index.php?c=WallPaper&a=getAppsByOrder&order=create_time&from=360chrome"
       u = u + "&start=" + this.items.length + "&count=20" ;
+      //进入axis回调函数前保留this指针
       let _this = this;
       axios.get(u).then(function (data) {
         let urls = data.data.data;
+        //获取图片url，并形成不同分辨率的壁纸下载链接
         for (let i = 0; i < urls.length; i++) {
           urls[i].d2560_1600 = downloadapi + decodeUrl(urls[i].url,2560,1600,100);
           urls[i].d1440_900 = downloadapi + decodeUrl(urls[i].url,1440,900,100);
@@ -94,21 +102,18 @@ export default {
 
     },
 
-    showItem(){
-      this.isShowItem = !this.isShowItem;
-    }
     },
   watch:{
+    //监控路由的变化，router的改变说明用户切换了分类
       $route:function () {
         this.key = new Date().getTime();
-        this.url = "http://wallpaper.apc.360.cn/index.php?c=WallPaper&a=getAppsByCategory&from=360chrome&cid=" + this.$route.query.cid,
+        this.url = "http://wallpaper.apc.360.cn/index.php?c=WallPaper&a=getAppsByCategory&from=360chrome&cid=" + this.$route.query.cid;
+        //清空items，刷新壁纸库
         this.items = [];
 
     }
   },
-  created() {
 
-  }
 }
 </script>
 

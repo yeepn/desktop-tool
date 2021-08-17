@@ -15,6 +15,7 @@
           :key="'todo' + index"
           @dblclick.stop="done($event, index)"
           @click.stop="editing(index)"
+          :style="{backgroundColor: hexToRGBA(colorBook[index%colorBook.length],0.8)}"
         >
           <p v-if="index !== editIndex" class="text-wrapper"><span>{{ index + 1 }}.</span><span>{{todo.todo_date}}</span>{{' '+todo.content }}</p>
           <div class="edit" v-else>
@@ -29,6 +30,7 @@
             <i class="iconfont icon-select" @click.stop="edited"></i>
             <i class="iconfont icon-close" @click.stop="clear(index)"></i>
           </div>
+          
         </div>
       </transition-group>
     </draggable>
@@ -54,6 +56,7 @@ export default {
       editIndex: -1,
       tempItem: null,
       dblclick: false,
+      colorBook:['#3273F1','#E63025','#FDAF03','#269945','#5E35B1','#FF9800','#D81B60','#9C27B0']
     };
   },
   methods: {
@@ -134,6 +137,28 @@ export default {
       this.todoList.splice(index, 1);
       DB.set("todoList", this.todoList);
     },
+    hexToRGBA(_color, _opacity) {
+      let sColor = _color.toLowerCase()
+      // 十六进制颜色值的正则表达式
+      const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/
+      // 如果是16进制颜色
+      if (sColor && reg.test(sColor)) {
+        if (sColor.length === 4) {
+          let sColorNew = '#'
+          for (let i = 1; i < 4; i += 1) {
+            sColorNew += sColor.slice(i, i + 1).concat(sColor.slice(i, i + 1))
+          }
+          sColor = sColorNew
+        }
+        // 处理六位的颜色值
+        const sColorChange = []
+        for (let i = 1; i < 7; i += 2) {
+          sColorChange.push(parseInt('0x' + sColor.slice(i, i + 2)))
+        }
+        return 'rgba(' + sColorChange.join(',') + ',' + _opacity + ')'
+      }
+      return sColor
+    },
   },
   computed: {
     dragOptions() {
@@ -170,6 +195,10 @@ export default {
   padding: 0 15px 28px 15px;
   .list {
     .item {
+      border-radius: 24px;
+      padding: 5px 20px;
+      margin: 2.5px 0;
+      background-color: #3273F1;
       height: 28px;
       p {
         width: 100%;
@@ -180,6 +209,7 @@ export default {
         cursor: pointer;
         user-select: none;
         line-height: 28px;
+        display: inline;
       }
       .edit {
         display: flex;
@@ -223,4 +253,5 @@ export default {
 .text-wrapper {
   white-space: pre-wrap;
 }
+
 </style>

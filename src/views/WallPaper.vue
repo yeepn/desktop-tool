@@ -98,7 +98,7 @@ export default {
       console.log("append")
       console.log(this)
       console.log(this.$wow)
-      this.$wow.init()
+      //this.$wow.init()
 
     },
 

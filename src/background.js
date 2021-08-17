@@ -170,5 +170,5 @@ async function setWallPaperViaUrl(url){
   var timestamp = (new Date()).valueOf();
   await exec(`eval wget ${url} -O /home/$USER/Pictures/${timestamp}.jpg&&dconf write /org/mate/desktop/background/picture-filename "'/home/$USER/Pictures/${timestamp}.jpg'"`)
 }
-
+//ipc主进程处理函数
 ipcMain.handle("setWallPaperViaUrl",(event,url)=>setWallPaperViaUrl(url));

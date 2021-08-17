@@ -11,15 +11,15 @@
     <section>
       <vue-masonry-wall :items="items" :options="option"  @append="append">
         <template v-slot:default="{item}">
-          <div class="photo">
+          <div class="photo wow lightSpeedIn center">
               <img :src="item.url" :id="item.id" >
             <ul  id="photo1" title="下载壁纸">
-              <li><a :href="item.d2560_1600">2560x1600</a></li>
+              <!-- <li><a :href="item.d2560_1600">2560x1600</a></li>
                <li><a :href="item.d1440_900">1440x900</a></li>
                <li><a :href="item.d1024_768" >1024x768</a></li>
-              <li><a :href="item.d800_600">800x600</a></li>
-              <li><a :href="item.raw" title="下载原始尺寸图片">原始尺寸</a></li>
-              <li><button style="font-size: 50%;border-inline-start-style: none;background-color: transparent" @click="Apply(item.raw)">设为壁纸</button></li></ul>
+              <li><a :href="item.d800_600">800x600</a></li> -->
+              <li><a :href="item.raw" title="下载原始尺寸图片">下载壁纸</a></li>
+              <li><a @click="Apply(item.raw)" title="设为壁纸">设为壁纸</a></li></ul>
           </div>
         </template>
       </vue-masonry-wall>
@@ -31,6 +31,7 @@
 <script>
 import VueMasonryWall from "vue-masonry-wall";
 import axios from "axios";
+import 'font-awesome/css/font-awesome.min.css' 
 const downloadapi = "http://image.baidu.com/search/down?tn=download&word=download&ie=utf8&fr=detail&url=";
 import { ipcRenderer } from "electron";
 function decodeUrl(oldUrl,width,height,quality)
@@ -56,6 +57,11 @@ export default {
       isShowItem:false
     }
   },
+   mounted() {  
+    this.$nextTick(() => {
+      this.$wow.init();
+    })
+  },  
   methods: {
     Apply(url){
       ipcRenderer.invoke("setWallPaperViaUrl",url);
@@ -81,6 +87,11 @@ export default {
         console.log(err)
         alert("接口异常");
       });
+      console.log("append")
+      console.log(this)
+      console.log(this.$wow)
+      this.$wow.init()
+
     },
 
     showItem(){
@@ -115,8 +126,8 @@ li {
 img{
   width: auto;
   height: auto;
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 45vw;
+  border-radius: 12px;
 }
 
 
@@ -154,6 +165,7 @@ a{
 {
   margin: 0 0;
   padding: 0 0;
+  max-width: 45vw;
   position: relative;
 }
 .photo .img1
@@ -173,13 +185,16 @@ a{
   left: 0%;
   top: 0%;
   height: 100%;
-  width: 40%;
+  width: 100%;
+  max-width: 45vw;
   background-color: rgba(0,0,0,0.5);
+  text-align: center;
+  border-radius: 12px;
 }
 .photo ul li
 {
-  margin-left: 5%;
-  height: 13%;
+    font-size: 2rem;
+    font-weight: 600;
 }
 .photo ul li a
 {

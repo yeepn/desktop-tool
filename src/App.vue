@@ -44,7 +44,6 @@
 <script>
 import pkg from "../package.json";
 import { ipcRenderer } from "electron";
-
 export default {
   components: {},
   data() {

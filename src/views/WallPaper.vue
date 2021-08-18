@@ -11,7 +11,7 @@
     <section>
       <vue-masonry-wall :items="items" :options="option"  @append="append">
         <template v-slot:default="{item}">
-          <div class="photo wow lightSpeedIn center">
+          <div class="photo wow  lightSpeedIn center">
               <img :src="item.url" :id="item.id" >
             <ul  id="photo1" title="下载壁纸">
               <!-- <li><a :href="item.d2560_1600">2560x1600</a></li>
@@ -59,11 +59,6 @@ export default {
       },
     }
   },
-   mounted() {  
-    this.$nextTick(() => {
-      this.$wow.init();
-    })
-  },  
   methods: {
     //ipc通知主进程调用修改壁纸函数
     Apply(url){
@@ -83,23 +78,16 @@ export default {
         let urls = data.data.data;
         //获取图片url，并形成不同分辨率的壁纸下载链接
         for (let i = 0; i < urls.length; i++) {
-          urls[i].d2560_1600 = downloadapi + decodeUrl(urls[i].url,2560,1600,100);
-          urls[i].d1440_900 = downloadapi + decodeUrl(urls[i].url,1440,900,100);
-          urls[i].d1024_768 = downloadapi + decodeUrl(urls[i].url,1024,768,100);
-          urls[i].d800_600 = downloadapi + decodeUrl(urls[i].url,800,600,100);
           urls[i].raw = downloadapi + decodeUrl(urls[i].url,0,0,100);
           _this.items.push(urls[i]);
         }
         _this.$forceUpdate();
+        new _this.$wow({live: false}).init();
+
       }).catch(function (err) {
         console.log(err)
         alert("接口异常");
       });
-      console.log("append")
-      console.log(this)
-      console.log(this.$wow)
-      //this.$wow.init()
-
     },
 
     },
@@ -110,6 +98,8 @@ export default {
         this.url = "http://wallpaper.apc.360.cn/index.php?c=WallPaper&a=getAppsByCategory&from=360chrome&cid=" + this.$route.query.cid;
         //清空items，刷新壁纸库
         this.items = [];
+    },
+    items:function (){
 
     }
   },

@@ -15,7 +15,6 @@ const DB = {
     if (!fs.pathExistsSync(storePath)) {
       fs.mkdirpSync(storePath);
     }
-
     const dbFile = isDevelopment ? "/data-dev.json" : "/data.json";
 
     const adapter = new FileSync(path.join(storePath, dbFile));

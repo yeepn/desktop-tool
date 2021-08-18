@@ -8,8 +8,7 @@ import {WOW} from 'wowjs'
 import '../node_modules/wowjs/css/libs/animate.css'
 Vue.config.productionTip = false;
 // 动画 animate.css
-
-Vue.prototype.$wow=WOW;
+Vue.prototype.$wow = WOW;
 // Vue.prototype.$wow = new WOW({
 //   boxClass: 'wow', // default
 //   animateClass: 'animated', // default
@@ -21,7 +20,9 @@ Vue.prototype.$wow=WOW;
 //
 //   callback: function(box) {
 //     console.log("WOW: animating <" + box.tagName.toLowerCase() + ">")
-//   }
+//   },
+//   scrollContainer : null ,     // 可选的滚动容器选择器，否则使用 window,
+//   resetAnimation : true ,      // 在结束时重置动画（默认为 true）
 // })
 
 

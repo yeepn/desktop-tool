@@ -1,6 +1,6 @@
 <template>
   <div  :key="key">
-  <div style="
+  <div id="scorll" style="
     max-width: 100%;
     max-height: 500px;
     display: block;
@@ -31,9 +31,11 @@
 <script>
 import VueMasonryWall from "vue-masonry-wall";
 import axios from "axios";
-import 'font-awesome/css/font-awesome.min.css' 
-const downloadapi = "http://image.baidu.com/search/down?tn=download&word=download&ie=utf8&fr=detail&url=";
+import 'font-awesome/css/font-awesome.min.css'
 import { ipcRenderer } from "electron";
+
+const downloadapi = "http://image.baidu.com/search/down?tn=download&word=download&ie=utf8&fr=detail&url=";
+
 function decodeUrl(oldUrl,width,height,quality)
 {
   return oldUrl.replace("r/__85", "m/" + parseInt(width) + "_" + parseInt(height) + "_" + quality);
@@ -80,10 +82,9 @@ export default {
         for (let i = 0; i < urls.length; i++) {
           urls[i].raw = downloadapi + decodeUrl(urls[i].url,0,0,100);
           _this.items.push(urls[i]);
+
         }
         _this.$forceUpdate();
-        new _this.$wow({live: false}).init();
-
       }).catch(function (err) {
         console.log(err)
         alert("接口异常");
@@ -98,12 +99,23 @@ export default {
         this.url = "http://wallpaper.apc.360.cn/index.php?c=WallPaper&a=getAppsByCategory&from=360chrome&cid=" + this.$route.query.cid;
         //清空items，刷新壁纸库
         this.items = [];
+
+
     },
-    items:function (){
-
-    }
   },
-
+  updated() {
+    this.$nextTick(()=>{
+      new this.$wow({
+        boxClass: 'wow', // default
+        animateClass: 'animated', // default
+        offset: 150, // default
+        mobile: false, // default
+        live: true,
+        scrollContainer : "#scorll" ,     // 可选的滚动容器选择器，否则使用 window,
+        resetAnimation : true ,      // 在结束时重置动画（默认为 true）
+      }).init();
+    })
+  }
 }
 </script>
 

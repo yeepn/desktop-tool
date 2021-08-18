@@ -5,14 +5,14 @@
     <div class="mask"></div>
     <div class="drag-nav">
       <b>{{ appName }}</b>
-      <i>Powered by 小黑</i>
+      <!-- <i>Powered by 小黑</i> -->
     </div>
     <div class="nav">
       <div class="link">
-        <router-link draggable="false" to="/">TodoList</router-link> |
-        <router-link draggable="false" to="/done">Done</router-link>|
-          <router-link draggable="false" to="/ContrabTask">ContrabTask</router-link>|
-          <router-link draggable="false" to="/wallfall/wallpaper?cid=0">WallFall</router-link>
+        <router-link draggable="false" to="/">TodoList</router-link>
+        <router-link draggable="false" to="/done">Done</router-link>
+        <router-link draggable="false" to="/ContrabTask">ContrabTask</router-link>
+        <router-link draggable="false" to="/wallfall/wallpaper?cid=0">WallFall</router-link>
 
       </div>
       <div class="tools">
@@ -72,7 +72,7 @@ export default {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 70%;
+  height: calc(100vh - 151px);;
   background-color: rgba($color: #000000, $alpha: 0.6);
   border-radius: 5px;
   .mask {
@@ -100,12 +100,16 @@ export default {
   .nav {
     display: flex;
     justify-content: space-between;
-    height: 26px;
     padding: 0 20px;
     color: #cccccc;
     user-select: none;
     .link {
+     margin-top: 10px;
       a {
+
+          border-radius:12px;
+        
+          padding: 10px;
         font-size: 15px;
         font-weight: bold;
         color: #cccccc;
@@ -115,7 +119,9 @@ export default {
           color: #ffffff;
         }
         &:hover {
-          color: rgba($color: #ffffff, $alpha: 0.6);
+        color: #ffffff;
+        background-color: #383838;
+
         }
       }
     }

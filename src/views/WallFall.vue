@@ -13,7 +13,7 @@
         </li>
       </ul>
     </div>
-    <router-view></router-view>
+    <router-view id="pic_body"></router-view>
   </div>
 </template>
 
@@ -71,7 +71,8 @@ export default {
 
 #banner a {
   text-decoration: none;
-  color: #000;
+  color: #D6EBF2;
+  font-weight: 600;
 }
 
 #banner li {
@@ -81,21 +82,33 @@ export default {
   cursor: pointer;
   font-size: 15px;
   list-style-type: none;
+  border-radius:12px;
+  color: #1a73e8;
+  margin: 10px;
+  font-weight: 800;
+
 }
 
 #banner li:hover, #banner li:hover a {
-  color: black;
+  color: #1a73e8;
+  background-color: #e8f0fe;
+  font-weight: 800;
+
 }
 
 .tags:hover #tags {
   display: block;
+  text-align: center;
 }
 
 #tags {
+  display: none;
+  flex-wrap: wrap;
+  border-radius: 0 0 24px 24px;
+  left: 0;
   z-index: 9999;
   display: none;
   position: absolute;
-  width: 210px;
   line-height: 35px;
   max-height: 270px;
   overflow: auto;
@@ -112,6 +125,10 @@ export default {
 
 #tags li:hover {
   background-color: #eee;
+}
+
+#pic_body{
+  padding-top: 20px;
 }
 
 

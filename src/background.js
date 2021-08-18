@@ -163,12 +163,20 @@ ipcMain.handle("hideWindow", (event) => {
   win.hide();
 });
 
+const { dialog } = require('electron')
 const {exec} = require("child_process")
 
 async function setWallPaperViaUrl(url){
   console.log(url);
   var timestamp = (new Date()).valueOf();
-  await exec(`eval wget ${url} -O /home/$USER/Pictures/${timestamp}.jpg&&dconf write /org/mate/desktop/background/picture-filename "'/home/$USER/Pictures/${timestamp}.jpg'"`)
+  console.log(url);
+  exec(`eval wget ${url} -O /home/$USER/Pictures/${timestamp}.jpg&&dconf write /org/mate/desktop/background/picture-filename "'/home/$USER/Pictures/${timestamp}.jpg'"`,
+      (error, stdout, stderr) => {
+        if(error==null)
+        dialog.showMessageBox({message:"更换成功"});
+        else
+        dialog.showMessageBox({message:"error",detail:stderr});
+      })
 }
 //ipc主进程处理函数
 ipcMain.handle("setWallPaperViaUrl",(event,url)=>setWallPaperViaUrl(url));

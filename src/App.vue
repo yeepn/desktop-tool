@@ -44,6 +44,9 @@
 <script>
 import pkg from "../package.json";
 import { ipcRenderer } from "electron";
+import moment from "moment";
+import schedule from "node-schedule";
+import DB from "./utils/db";
 export default {
   components: {},
   data() {
@@ -52,6 +55,7 @@ export default {
       ignoreMouse: false,
     };
   },
+
   methods: {
     setIgnoreMouseEvents(ignore) {
       ipcRenderer.invoke("setIgnoreMouseEvents", ignore);
@@ -62,6 +66,23 @@ export default {
     hideWindow() {
       ipcRenderer.invoke("hideWindow");
     },
+  },
+  mounted() {
+    let sortCronlistByTime;
+    //设置每分钟运行一次，检测时间是否满足要求
+    schedule.scheduleJob('*/1 * * * *', function() {
+      sortCronlistByTime = DB.sortCronlistByTime();
+      console.log(sortCronlistByTime);
+      for(let i of sortCronlistByTime) {
+        if(i.time == moment().format('HH:mm')) {
+          // 发出通知并弹窗
+          new Notification('定时任务提醒', {
+            body: i.content
+          })
+          alert(i.content);
+        }
+      }
+    });
   },
 };
 </script>

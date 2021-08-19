@@ -29,7 +29,7 @@ ipcMain.handle("getDataPath", (event) => {
 export function initExtra() {
   const storePath = getDataPath();
   DB.initDB(storePath);
-
+  console.log(storePath);
   const firstRun = DB.get("settings.firstRun");
   if (firstRun) {
     setOpenAtLogin(true);

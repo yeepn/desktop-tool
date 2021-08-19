@@ -63,8 +63,9 @@ const DB = {
       ],
       crontabList:[
         {
-          tips_time: "",
-          tips_text: "喝水",
+          time: "12:35",
+          type:"notification",
+          content: "喝水",
         }
       ],
       settings: {},
@@ -116,6 +117,10 @@ const DB = {
       .value();
     return d;
   },
+  sortCronlistByTime(){
+    const d = db.get("crontabList").sortBy("time").value();
+    return d;
+  }
 };
 
 export default DB;

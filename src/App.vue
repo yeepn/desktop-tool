@@ -5,14 +5,13 @@
     <div class="mask"></div>
     <div class="drag-nav">
       <b>{{ appName }}</b>
-      <!-- <i>Powered by 小黑</i> -->
     </div>
     <div class="nav">
       <div class="link">
-        <router-link draggable="false" to="/">TodoList</router-link>
+        <router-link draggable="false" to="/">Todo</router-link>
         <router-link draggable="false" to="/done">Done</router-link>
-        <router-link draggable="false" to="/ContrabTask">ContrabTask</router-link>
-        <router-link draggable="false" to="/wallfall/wallpaper?cid=0">WallFall</router-link>
+        <router-link draggable="false" to="/ContrabTask">Schedule</router-link>
+        <router-link draggable="false" to="/wallfall/wallpaper?cid=0">WallPaper</router-link>
 
       </div>
       <div class="tools">

@@ -51,31 +51,6 @@ export function createTray(setPosition) {
       },
     },
     {
-      label: "项目地址",
-      click: () => {
-        shell.openExternal("https://github.com/xiajingren/xhznl-todo-list");
-      },
-    },
-    {
-      label: "问题反馈",
-      click: () => {
-        shell.openExternal(
-          "https://github.com/xiajingren/xhznl-todo-list/issues"
-        );
-      },
-    },
-    {
-      label: "关于",
-      role: "abort",
-      click() {
-        dialog.showMessageBox({
-          title: pkg.name,
-          message: pkg.description,
-          detail: `Version: ${pkg.version}\nAuthor: ${pkg.author}\nGithub: https://github.com/xiajingren/xhznl-todo-list`,
-        });
-      },
-    },
-    {
       label: "退出",
       role: "quit",
     },
@@ -84,7 +59,7 @@ export function createTray(setPosition) {
 
   tray.setToolTip(pkg.name);
 
-  tray.on("click", (event, bounds, position) => {
+  tray.on("click", () => {
     setPosition();
   });
 }

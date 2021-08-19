@@ -1,4 +1,3 @@
-// vue.config.js
 
 module.exports = {
   pluginOptions: {
@@ -20,11 +19,6 @@ module.exports = {
           shortcutName: "xhznl-todo-list",
         },
         publish: ["github"],
-        // releaseInfo: {
-        //   releaseName: "",
-        //   releaseNotes: "",
-        //   releaseDate: "",
-        // },
       },
       nodeIntegration: true,
     },

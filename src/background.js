@@ -171,11 +171,11 @@ async function setWallPaperViaUrl(url){
 
 
 //ipc part
-ipcMain.handle("setIgnoreMouseEvents", (event, ignore) => {
-  if (ignore) win.setIgnoreMouseEvents(true, { forward: true });
-  else win.setIgnoreMouseEvents(false);
-
-});
+// ipcMain.handle("setIgnoreMouseEvents", (event, ignore) => {
+//   if (ignore) win.setIgnoreMouseEvents(true, { forward: true });
+//   else win.setIgnoreMouseEvents(false);
+//
+// });
 
 ipcMain.handle("hideWindow", (event) => {
   win.hide();
@@ -192,10 +192,7 @@ ipcMain.handle("winShow",()=>{
 //鼠标移出时窗口归位，要保证归位窗口起始位置必须贴边显示，否则
 ipcMain.handle("winHide",()=>{
   //移出后首先保存位置，然后移动窗口
-  // bounds = win.getBounds();
-  // console.log(bounds.x);
-  // console.log(bounds.width);
-  // if (bounds.x-bounds.width>10) return;
+  bounds = win.getBounds();
   const size = screen.getPrimaryDisplay().workAreaSize;
   win.setBounds({x:size.width-8});
 })

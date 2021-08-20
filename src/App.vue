@@ -1,6 +1,6 @@
 <template>
 
-  <div id="app" :class="{ unfocused: ignoreMouse }" @mouseenter.stop="winShow" @mouseleave.stop="winHide">
+  <div id="app"  @mouseenter.stop="winShow" @mouseleave.stop="winHide">
 
     <div class="mask"></div>
     <div class="drag-nav">
@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       appName: pkg.name,
-      ignoreMouse: false,
+      ignoreMouse: true,
     };
   },
 

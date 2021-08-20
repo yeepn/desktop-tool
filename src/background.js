@@ -172,7 +172,6 @@ async function setWallPaperViaUrl(url){
 
 //ipc part
 ipcMain.handle("setIgnoreMouseEvents", (event, ignore) => {
-  console.log(ignore);
   if (ignore) win.setIgnoreMouseEvents(true, { forward: true });
   else win.setIgnoreMouseEvents(false);
 
@@ -185,13 +184,18 @@ ipcMain.handle("hideWindow", (event) => {
 //ipc主进程处理函数
 ipcMain.handle("setWallPaperViaUrl",(event,url)=>setWallPaperViaUrl(url));
 
-//鼠标移入时，将窗口整体向右移动
+//鼠标移入时，将窗口归位
 ipcMain.handle("winShow",()=>{
-  bounds = win.getBounds();
+  win.setBounds(bounds)
+
+})
+//鼠标移出时窗口归位，要保证归位窗口起始位置必须贴边显示，否则
+ipcMain.handle("winHide",()=>{
+  //移出后首先保存位置，然后移动窗口
+  // bounds = win.getBounds();
+  // console.log(bounds.x);
+  // console.log(bounds.width);
+  // if (bounds.x-bounds.width>10) return;
   const size = screen.getPrimaryDisplay().workAreaSize;
   win.setBounds({x:size.width-8});
-})
-//鼠标移出时窗口归位
-ipcMain.handle("winHide",()=>{
-  win.setBounds(bounds)
 })

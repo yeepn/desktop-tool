@@ -1,6 +1,6 @@
 <template>
 
-  <div id="app" :class="{ unfocused: ignoreMouse }" @mouseenter.stop="autoHideClose" @mouseleave.stop="autoHideOn">
+  <div id="app" :class="{ unfocused: ignoreMouse }" @mouseenter.stop="winShow" @mouseleave.stop="winHide">
 
     <div class="mask"></div>
     <div class="drag-nav">
@@ -21,10 +21,11 @@
           <i
             :class="['iconfont', ignoreMouse ? 'icon-lock' : 'icon-unlock']"
             key="lock"
-            @mouseenter="setIgnoreMouseEvents(false)"
-            @mouseleave="setIgnoreMouseEvents(ignoreMouse)"
-            @click="ignoreMouse = !ignoreMouse"
-          ></i>
+            @click="ignoreMouse = !ignoreMouse"></i>
+<!--            @mouseenter="setIgnoreMouseEvents(false)"-->
+<!--            @mouseleave="setIgnoreMouseEvents(ignoreMouse)"-->
+<!--            @click="ignoreMouse = !ignoreMouse"-->
+<!--          ></i>-->
         </transition-group>
       </div>
     </div>
@@ -56,15 +57,17 @@ export default {
   },
 
   methods: {
-    autoHideOn(){
+    winShow(){
+      if (this.ignoreMouse)return;
       ipcRenderer.invoke("winShow");
     },
-    autoHideClose(){
+    winHide(){
+      if (this.ignoreMouse) return;
       ipcRenderer.invoke("winHide");
     },
-    setIgnoreMouseEvents(ignore) {
-      ipcRenderer.invoke("setIgnoreMouseEvents", ignore);
-    },
+    // setIgnoreMouseEvents(ignore) {
+    //   ipcRenderer.invoke("setIgnoreMouseEvents", ignore);
+    // },
     exportData() {
       ipcRenderer.invoke("exportData");
     },

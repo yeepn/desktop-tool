@@ -10,7 +10,7 @@
       <div class="link">
         <router-link draggable="false" to="/">Todo</router-link>
         <router-link draggable="false" to="/done">Done</router-link>
-        <router-link draggable="false" to="/ContrabTask">Schedule</router-link>
+        <router-link draggable="false" to="/shedule">Schedule</router-link>
         <router-link draggable="false" to="/wallfall/wallpaper?cid=0">WallPaper</router-link>
 
       </div>

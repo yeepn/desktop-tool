@@ -61,7 +61,7 @@ const DB = {
           id: "272aa857-bd53-44fb-b6fc-49d4ef595ade",
         },
       ],
-      crontabList:[
+      schedulelist:[
         {
           time: "12:35",
           type:"notification",

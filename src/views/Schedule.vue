@@ -143,16 +143,16 @@ export default {
       this.schedulelist.splice(index, 1);
       DB.set("schedulelist", this.schedulelist);
     },
-    timeedited(event){
-      if (!this.checkTime(event.target.value)){
-        alert("时间格式错误");
-        this.schedulelist[this.editIndex].time="";
-        return;
-      }
-      event.target.blur();
-      console.log(this.$refs.content[this.editIndex]);
-      this.$refs.content[this.editIndex].focus();
-    },
+    // timeedited(event){
+    //   if (!this.checkTime(event.target.value)){
+    //     alert("时间格式错误");
+    //     this.schedulelist[this.editIndex].time="";
+    //     return;
+    //   }
+    //   event.target.blur();
+    //   console.log(this.$refs.content[this.editIndex]);
+    //   this.$refs.content[this.editIndex].focus();
+    // },
     hexToRGBA(_color, _opacity) {
       let sColor = _color.toLowerCase()
       // 十六进制颜色值的正则表达式

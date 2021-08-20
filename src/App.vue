@@ -1,6 +1,6 @@
 <template>
 
-  <div id="app" :class="{ unfocused: ignoreMouse }">
+  <div id="app" :class="{ unfocused: ignoreMouse }" @mouseenter.stop="autoHideClose" @mouseleave.stop="autoHideOn">
 
     <div class="mask"></div>
     <div class="drag-nav">
@@ -56,6 +56,12 @@ export default {
   },
 
   methods: {
+    autoHideOn(){
+      ipcRenderer.invoke("winShow");
+    },
+    autoHideClose(){
+      ipcRenderer.invoke("winHide");
+    },
     setIgnoreMouseEvents(ignore) {
       ipcRenderer.invoke("setIgnoreMouseEvents", ignore);
     },

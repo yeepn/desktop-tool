@@ -2,9 +2,9 @@
 
 import { app, protocol, BrowserWindow, screen, ipcMain } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
-//import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 const isDevelopment = process.env.NODE_ENV !== "production";
-
+const { dialog } = require('electron')
+const {exec} = require("child_process")
 import { initExtra, createTray } from "@/utils/backgroundExtra";
 
 import { autoUpdater } from "electron-updater";
@@ -26,7 +26,7 @@ if (app.requestSingleInstanceLock()) {
 protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } },
 ]);
-
+let bounds;
 async function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
@@ -64,7 +64,7 @@ async function createWindow() {
     win.loadURL("app://./index.html");
     autoUpdater.checkForUpdatesAndNotify();
   }
-
+  bounds = win.getBounds()
   // win.once("ready-to-show", () => {
   //   win.show();
   // });
@@ -82,6 +82,8 @@ async function createWindow() {
 
       return true;
     });
+
+
   }
 
   win.on("closed", () => {
@@ -121,6 +123,7 @@ app.on("ready", async () => {
   // }
 
   init();
+
 });
 
 function init() {
@@ -147,36 +150,48 @@ if (isDevelopment) {
 function setPosition() {
   const size = screen.getPrimaryDisplay().workAreaSize;
   const winSize = win.getSize();
-  win.setPosition(size.width - winSize[0] - 30, 30);
+  win.setPosition(size.width - winSize[0]+10, 30);
 }
 
 function showWindow() {
   if (!win.isVisible()) win.show();
 }
+//设置壁纸,目前只支持meta ，传如图片url
 
+async function setWallPaperViaUrl(url){
+  var timestamp = (new Date()).valueOf();
+  exec(`eval wget ${url} -O /home/$USER/Pictures/${timestamp}.jpg&&dconf write /org/mate/desktop/background/picture-filename "'/home/$USER/Pictures/${timestamp}.jpg'"`,
+      (error, stdout, stderr) => {
+        if(error==null)
+          dialog.showMessageBox({message:"更换成功"});
+        else
+          dialog.showMessageBox({message:"error",detail:stderr});
+      })
+}
+
+
+//ipc part
 ipcMain.handle("setIgnoreMouseEvents", (event, ignore) => {
+  console.log(ignore);
   if (ignore) win.setIgnoreMouseEvents(true, { forward: true });
   else win.setIgnoreMouseEvents(false);
+
 });
 
 ipcMain.handle("hideWindow", (event) => {
   win.hide();
 });
 
-const { dialog } = require('electron')
-const {exec} = require("child_process")
-
-async function setWallPaperViaUrl(url){
-  console.log(url);
-  var timestamp = (new Date()).valueOf();
-  console.log(url);
-  exec(`eval wget ${url} -O /home/$USER/Pictures/${timestamp}.jpg&&dconf write /org/mate/desktop/background/picture-filename "'/home/$USER/Pictures/${timestamp}.jpg'"`,
-      (error, stdout, stderr) => {
-        if(error==null)
-        dialog.showMessageBox({message:"更换成功"});
-        else
-        dialog.showMessageBox({message:"error",detail:stderr});
-      })
-}
 //ipc主进程处理函数
 ipcMain.handle("setWallPaperViaUrl",(event,url)=>setWallPaperViaUrl(url));
+
+//鼠标移入时，将窗口整体向右移动
+ipcMain.handle("winShow",()=>{
+  bounds = win.getBounds();
+  const size = screen.getPrimaryDisplay().workAreaSize;
+  win.setBounds({x:size.width-8});
+})
+//鼠标移出时窗口归位
+ipcMain.handle("winHide",()=>{
+  win.setBounds(bounds)
+})

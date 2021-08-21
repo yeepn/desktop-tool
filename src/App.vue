@@ -76,12 +76,11 @@ export default {
     },
   },
   mounted() {
-    let sortCronlistByTime;
+    let sortschedulelistByTime;
     //设置每分钟运行一次，检测时间是否满足要求
     schedule.scheduleJob('*/1 * * * *', function() {
-      sortCronlistByTime = DB.sortCronlistByTime();
-      console.log(sortCronlistByTime);
-      for(let i of sortCronlistByTime) {
+      sortschedulelistByTime = DB.sortschedulelistByTime();
+      for(let i of sortschedulelistByTime) {
         if(i.time == moment().format('HH:mm')) {
           // 发出通知并弹窗
           new Notification('定时任务提醒', {

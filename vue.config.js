@@ -3,22 +3,19 @@ module.exports = {
   pluginOptions: {
     electronBuilder: {
       builderOptions: {
-        appId: "xhznl-todo-list",
-        productName: "xhznl-todo-list",
-        copyright: "Copyright © 2020 xhznl",
-        // directories: {
-        //   output: "./dist", //输出文件路径
-        // },
+        appId: "desktop-tool",
+        productName: "desktop-tool",
+        copyright: "Copyright © 2021 ",
         win: {
-          icon: "./public/logo.ico",
+          icon: "./public/logo1.ico",
           target: "nsis",
         },
         nsis: {
           oneClick: false,
           allowToChangeInstallationDirectory: true,
-          shortcutName: "xhznl-todo-list",
+          shortcutName: "desktop-tool",
         },
-        publish: ["github"],
+        publish: ["gitee"],
       },
       nodeIntegration: true,
     },

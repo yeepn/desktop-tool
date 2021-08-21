@@ -5,6 +5,7 @@ import path from "path";
 import fs from "fs-extra";
 
 import { getNowDate, getNowDateTime } from "@/utils/common";
+import moment from "moment";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
@@ -63,7 +64,7 @@ const DB = {
       ],
       schedulelist:[
         {
-          time: "12:35",
+          time: moment().add("1",'m').format("HH:mm"),
           type:"notification",
           content: "喝水",
         }
@@ -117,8 +118,8 @@ const DB = {
       .value();
     return d;
   },
-  sortCronlistByTime(){
-    const d = db.get("crontabList").sortBy("time").value();
+  sortschedulelistByTime(){
+    const d = db.get("schedulelist").sortBy("time").value();
     return d;
   }
 };

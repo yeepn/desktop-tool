@@ -150,7 +150,7 @@ if (isDevelopment) {
 function setPosition() {
   const size = screen.getPrimaryDisplay().workAreaSize;
   const winSize = win.getSize();
-  win.setPosition(size.width - winSize[0]+10, 30);
+  win.setPosition(size.width - winSize[0]+20, 30);
 }
 
 function showWindow() {
@@ -194,5 +194,5 @@ ipcMain.handle("winHide",()=>{
   //移出后首先保存位置，然后移动窗口
   bounds = win.getBounds();
   const size = screen.getPrimaryDisplay().workAreaSize;
-  win.setBounds({x:size.width-8});
+  win.setBounds({x:size.width-10});
 })

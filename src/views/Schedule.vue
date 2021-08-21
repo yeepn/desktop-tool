@@ -29,14 +29,24 @@
 <!--            />-->
 
 
-
             <input
+            type="time"
+                ref="time"
+                v-model="shedule.time"
+                @click.stop="return false;"
+                @keyup.27="cancel(index)"
+                @keyup.13="edited"
+                spellcheck="false"
+            />
+            <input
+                class="flex-1"
                 ref="content"
                 v-model="shedule.content"
                 @click.stop="return false;"
                 @keyup.27="cancel(index)"
                 @keyup.13="edited"
                 spellcheck="false"
+                placeholder="点击图标选择时间,点击这里输入内容"
             />
             <i class="iconfont icon-select" @click.stop="edited"></i>
             <i class="iconfont icon-close" @click.stop="clear(index)"></i>
@@ -88,6 +98,7 @@ export default {
       this.schedulelist.push({
         type: "notification",
         content: "",
+        time:""
       });
       const index = this.schedulelist.length - 1;
       this.tempItem = Object.assign({}, this.schedulelist[index]);
@@ -102,8 +113,19 @@ export default {
         if (this.editIndex !== -1) {
           this.edited();
         }
+        console.log("editing")
 
         this.tempItem = Object.assign({}, this.schedulelist[index]);
+        console.log(this.tempItem)
+        console.log(this.schedulelist[index])
+
+        //验证时间是否合法
+        // if(!this.checkTime(this.schedulelist[index].time)){
+        //   alert("时间不合法，重新输入")
+        //   this.schedulelist[index].time=""
+        //   this.index = -1;
+        //   return
+        // } 
 
         this.editIndex = index;
       }, 220);
@@ -113,6 +135,15 @@ export default {
       this.schedulelist = this.schedulelist.filter((p) => {
         return p.content;
       });
+
+      // //验证时间是否合法
+      //   if(!this.checkTime(this.schedulelist[this.editIndex].time)){
+      //     alert("时间不合法，重新输入")
+      //     this.schedulelist[this.editIndex]=""
+      // this.editIndex = -1;
+      //     return
+      //   } 
+
       this.editIndex = -1;
 
       DB.set("schedulelist", this.schedulelist);
@@ -233,13 +264,16 @@ export default {
         height: 100%;
         justify-content: space-between;
         input {
-          flex: 1;
+          
           height: 100%;
           outline: none;
           border: none;
           background: transparent;
           font-size: 16px;
           line-height: 28px;
+        }
+        input::placeholder{
+          color: azure;
         }
         i {
           line-height: 28px;
@@ -268,6 +302,14 @@ export default {
 
 .text-wrapper {
   white-space: pre-wrap;
+}
+
+.width-unset{
+  width: unset!important;
+}
+
+.flex-1{
+  flex: 1;
 }
 
 </style>

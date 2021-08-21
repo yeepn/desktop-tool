@@ -1,9 +1,9 @@
 {
-  "name": "xhznl-todo-list",
+  "name": "desktop-tool",
   "version": "0.2.0",
   "private": true,
-  "author": "xhznl",
-  "description": "a todo list application",
+  "author": "",
+  "description": "a desktop tool",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

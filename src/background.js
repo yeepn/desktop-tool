@@ -34,7 +34,7 @@ async function createWindow() {
     height: 505,
     minWidth: 446,
     minHeight: 354,
-    type: "toolbar",
+    type: "dock",
     frame: false,
     title: pkg.name,
     //resizable: false,

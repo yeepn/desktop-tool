@@ -2,7 +2,7 @@
   "name": "desktop-tool",
   "version": "0.2.0",
   "private": true,
-  "author": "",
+  "author": "Example<example@example.com>",
   "description": "a desktop tool",
   "scripts": {
     "serve": "vue-cli-service serve",

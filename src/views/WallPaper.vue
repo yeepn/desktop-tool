@@ -36,7 +36,7 @@
                 <li>
                   <a
                     href="javascript:void(0);"
-                    @click="Apply(item)"
+                    @click="Apply(item.url)"
                     title="设为壁纸"
                     >设为壁纸</a
                   >

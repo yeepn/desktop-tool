@@ -10,12 +10,18 @@ module.exports = {
           icon: "./public/logo1.ico",
           target: "nsis",
         },
+        linux: {
+          "target": [
+            "deb",
+            "AppImage"
+          ]
+        },
         nsis: {
           oneClick: false,
           allowToChangeInstallationDirectory: true,
           shortcutName: "desktop-tool",
         },
-        publish: ["gitee"],
+        
       },
       nodeIntegration: true,
     },

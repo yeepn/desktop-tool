@@ -181,4 +181,8 @@ export default {
   }
 }
 
+::-webkit-scrollbar {
+    width: 4px!important;
+}
+
 </style>

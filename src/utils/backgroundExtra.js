@@ -39,7 +39,7 @@ export function initExtra() {
 
 export function createTray(setPosition) {
   tray = new Tray(path.join(__static, "./tary.png"));
-
+  
   const contextMenu = Menu.buildFromTemplate([
     {
       label: "开机启动",
@@ -48,6 +48,12 @@ export function createTray(setPosition) {
       click() {
         const openAtLogin = getOpenAtLogin();
         setOpenAtLogin(!openAtLogin);
+      },
+    },
+    {
+      label: "显示主界面",
+      click() {
+        setPosition();
       },
     },
     {

@@ -144,7 +144,7 @@ export default {
   updated() {
     this.$nextTick(() => {
       console.log(new Date()-this.lastAnimatePlayTime)
-      if(new Date()-this.lastAnimatePlayTime>2000){
+      if((new Date()-this.lastAnimatePlayTime>2000)||this.$wow==null){
         new this.$wow({
           boxClass: "wow", // default
           animateClass: "animated", // default

@@ -36,7 +36,7 @@
                 <li>
                   <a
                     href="javascript:void(0);"
-                    @click="Apply(item)"
+                    @click="Apply(item.url)"
                     title="设为壁纸"
                     >设为壁纸</a
                   >
@@ -144,7 +144,7 @@ export default {
   updated() {
     this.$nextTick(() => {
       console.log(new Date()-this.lastAnimatePlayTime)
-      if(new Date()-this.lastAnimatePlayTime>2000){
+      if((new Date()-this.lastAnimatePlayTime>2000)||this.$wow==null){
         new this.$wow({
           boxClass: "wow", // default
           animateClass: "animated", // default

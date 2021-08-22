@@ -127,7 +127,9 @@ app.on("ready", async () => {
 });
 
 function init() {
-  createWindow();
+  setTimeout(() => {
+    createWindow();
+  }, 1500);  //延时1.5s 更短也许也能行，具体看硬件
   initExtra();
   createTray(showWindow);
 }
